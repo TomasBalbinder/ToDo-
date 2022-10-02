@@ -1,0 +1,23 @@
+{% extends 'ToDoApp/base.html' %}
+
+
+
+{% block content %}
+
+{% for message in messages %}
+     {% if 'nickname' in message.tags %}
+          <p> {{message}} </p> 
+     {% endif %}
+{% endfor %}
+
+<form action="" method="POST">
+
+     <h3>Create</h3>
+    {% csrf_token %}
+    {{ form.as_p }}
+
+        
+    <button type="submit" >Create</button>
+</form>
+
+{% endblock %}
