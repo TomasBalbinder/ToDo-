@@ -1,0 +1,32 @@
+{% extends 'ToDoApp/base.html' %}
+
+
+{% block content %}
+
+<h1>Shows posts</h1>
+
+    {% for model_attribute in mydata %}
+
+    
+        <form action="">
+          
+ 
+            
+            <h3><input type="checkbox" name="recommendations" id="option{{model_attribute.id}}" value={{ model_attribute.title }}>
+            <label for="option{{friend.id}}">{{ model_attribute.title }}</label></h3>
+        
+            <p>{{ model_attribute.memo }}</p>
+            <p>{{ model_attribute.created }}</p>
+
+            
+        </form>
+         
+    {% endfor %}
+
+        <input type="submit" value="Submit">
+
+        
+{% endblock %}
+
+
+ 

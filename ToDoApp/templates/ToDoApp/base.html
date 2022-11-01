@@ -6,12 +6,15 @@
 
 Logged In as {{ user.username }}
 
+
+
 <form action="{% url 'logoutuser' %}" method="POST">
 
     {% csrf_token %}    
     <button type="submit" >Logout</button>
 </form>
-
+<a href="{% url 'createtodo' %}">vytvoř upominku</a>
+<a href="{% url 'showposts' %}">zobrazit vsechny</a>
 {% else %}
 
 

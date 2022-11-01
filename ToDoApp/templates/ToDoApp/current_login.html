@@ -9,10 +9,24 @@
 </head> 
 <body> 
   <main>
+    
     {% block content %}
-    <p>Hello</p>
+    <p>prihlašeny</p>
+
+      {% for message in messages %}     
+        {% if message.tags %} 
+          <p>{{ message }}</p>
+        {% endif %}
+      {% endfor %} 
+
 
     {% endblock %}
+
   </main> 
-</body> 
+  
+</body>
+
+
+
 </html>
+

@@ -3,10 +3,9 @@
 
 {% block content %}
      
-<h1>Hello</h1>
+<h1>registration</h1>
 
-<h2>{{ error }}</h2>
-<h2>{{ nickname }}</h2>
+
 
 {% for message in messages %}
      {% if 'nickname' in message.tags %}
@@ -17,6 +16,8 @@
           <p> {{message}} </p> 
      {% endif %}
 {% endfor %}
+
+ {{ email }}
 
 <form action="" method="POST">
 
