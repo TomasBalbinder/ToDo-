@@ -6,6 +6,12 @@
      {% if 'nickname' in message.tags %}
           <p> {{message}} </p> 
      {% endif %}
+
+     {% if 'registration_sucess' in message.tags %}
+     <p> {{message}} </p> 
+
+     {% endif %}
+
 {% endfor %}
 
 <form action="" method="POST">

@@ -3,29 +3,60 @@
 
 {% block content %}
 
-<h1>Shows posts</h1>
+    <h1>Shows posts</h1>
 
-    {% for model_attribute in mydata %}
+{% for message in messages %}
+    {% if 'noposts' in message.tags %}
+         <p> {{message}} </p> 
+    {% endif %}
+{% endfor %}
 
-    
-        <form action="">
-          
- 
+<form action="" method=POST>
+    {% csrf_token %}
+
+
+     
+    {% for post in mydata %}
+    <tr>
+        <td>{{ post.title }}</td>
+        <td>{{ post.memo }}</td>
+        <td>{{ post.created }}</td>
+        <br>
+        <td>
             
-            <h3><input type="checkbox" name="recommendations" id="option{{model_attribute.id}}" value={{ model_attribute.title }}>
-            <label for="option{{friend.id}}">{{ model_attribute.title }}</label></h3>
-        
-            <p>{{ model_attribute.memo }}</p>
-            <p>{{ model_attribute.created }}</p>
+            {% if post.approved %}
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" checked="checked" value={{post.id}} name="boxes">
+            </div>
+            {% else %}
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value={{post.id}} name="boxes">
+            </div>
 
-            
-        </form>
-         
-    {% endfor %}
 
-        <input type="submit" value="Submit">
+            {% endif %}
 
-        
+        </td>
+        <br>
+    </tr>
+{% endfor %}
+
+
+
+
+
+     {% if not mydata %}
+     <button  type="submit" disabled>Delete</button> 
+
+
+     {% else %}
+     <button  type="submit">Delete</button> 
+
+     {% endif %}
+
+
+
+
 {% endblock %}
 
 

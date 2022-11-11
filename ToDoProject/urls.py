@@ -33,8 +33,11 @@ urlpatterns = [
     # work with todo
     path('create/', views.create_article, name='createtodo'),
     path('posts/', views.show_posts, name='showposts'),
+   
+  
 
     # verification from email register 
     path('verification/', include('verify_email.urls')),
+
 
 ]
