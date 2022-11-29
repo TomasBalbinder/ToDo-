@@ -141,3 +141,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGOUT_REDIRECT_URL = "/"
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+#EMAIL_BACKEND  =  "django.core.mail.backends.filebased.EmailBackend" 
+#EMAIL_FILE_PATH  =  BASE_DIR  /  "odeslané_e-maily"
