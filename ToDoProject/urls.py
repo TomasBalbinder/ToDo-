@@ -24,24 +24,26 @@ urlpatterns = [
     
     path('admin/', admin.site.urls),
     path('', views.home_page, name='home'),
-    path('current/', views.current_login, name='current'),
     path('', include('ToDoApp.urls')),
 
     # authentication
+    path('current/', views.current_login, name='current'),
     path('signup/', views.sign_up_user, name='signupuser'),    
     path('logout/', views.logout_user, name='logoutuser'),
     path('login/', views.login_user, name='loginuser'),
+
+    # verification from lost password
     path('accounts/', include('django.contrib.auth.urls')),
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='ToDoApp/password/password_reset_done.html'), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="ToDoApp/password/password_reset_confirm.html"), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='ToDoApp/password/password_reset_complete.html'), name='password_reset_complete'),      
    
     
-    # work with todo
+    # work with todo list
     path('create/', views.create_article, name='createtodo'),
     path('posts/', views.show_posts, name='showposts'),
    
 
-    # verification from email register 
-    path('verification/', include('verify_email.urls')),
+    # verification from email registration
+    path('activate/<uidb64>/<token>/',views.activate_account , name='activate'),
 ]

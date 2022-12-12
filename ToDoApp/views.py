@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .utility import authentication
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout, authenticate, get_user_model
 from .forms import TodoForm, CustomRegisterForm
 from .models import TodoModel
 from django.contrib.auth.models import User
@@ -13,9 +13,13 @@ from django.http import HttpResponse
 from django.contrib.auth.forms import PasswordResetForm
 from django.template.loader import render_to_string
 from django.db.models.query_utils import Q
-from django.utils.http import urlsafe_base64_encode
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
-from django.utils.encoding import force_bytes
+from django.utils.encoding import force_bytes, force_str
+from django.contrib.sites.shortcuts import get_current_site  
+from .tokens import account_activation_token
+from django.core.mail import EmailMessage
+  
 
 # Create your views here
 
@@ -46,11 +50,24 @@ def sign_up_user(request):
             if request.method == "POST":               
                 form = CustomRegisterForm(request.POST)
                 if form.is_valid():
-                    username = form.cleaned_data.get('username')     
-                    form.save()                
-                    messages.success(request, f"Account was created {username}", extra_tags='registration_sucess')
-                    form = UserCreationForm()
-                    return redirect('loginuser')
+                    username = form.cleaned_data.get('username')
+                    user = form.save(commit=False)
+                    user.is_active = False      
+                    user.save() 
+                    current_site = get_current_site(request)
+                    mail_subject = 'Activation link has been sent to your email id'  
+                    message = render_to_string('ToDoApp/active_email.html', {  
+                        'user': user,  
+                        'domain': current_site.domain,  
+                        'uid':urlsafe_base64_encode(force_bytes(user.pk)),  
+                        'token':account_activation_token.make_token(user),  
+                    })
+                    to_email = form.cleaned_data.get('email')
+                    email = EmailMessage(mail_subject, message, to=[to_email]) 
+                    email.send() 
+                    return render(request, 'ToDoApp/sent_email.html', {'username' : username})
+                    
+                    
 
                 else:
                     form = CustomRegisterForm()
@@ -58,7 +75,22 @@ def sign_up_user(request):
 
     return render(request, 'ToDoApp/signup_user.html', {'form' : CustomRegisterForm()})
 
+def activate_account(request, uidb64, token):
+    User = get_user_model()
 
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))  
+        user = User.objects.get(pk=uid) 
+
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):  
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')  
+    else:  
+        return HttpResponse('Activation link is invalid!')     
 
 def current_login(request):    
     return render(request, 'ToDoApp/current_login.html')
