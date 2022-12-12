@@ -67,13 +67,14 @@ def sign_up_user(request):
                     email.send() 
                     return render(request, 'ToDoApp/sent_email.html', {'username' : username})
                     
-                    
-
                 else:
                     form = CustomRegisterForm()
                     return render(request, 'ToDoApp/signup_user.html', {'form' : form})
 
     return render(request, 'ToDoApp/signup_user.html', {'form' : CustomRegisterForm()})
+
+
+    
 
 def activate_account(request, uidb64, token):
     User = get_user_model()
