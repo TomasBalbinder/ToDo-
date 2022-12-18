@@ -1,7 +1,8 @@
 
 from django import forms
-from .models import TodoModel, User
+from .models import TodoModel, User, Profile
 from django.contrib.auth.forms import UserCreationForm
+
 
 
 class TodoForm(forms.ModelForm):
@@ -23,7 +24,6 @@ class CustomRegisterForm(UserCreationForm):
 
 
 
-
 class ResetForm(forms.ModelForm):
 
     email = forms.EmailField(label='Email', max_length=200)
@@ -31,3 +31,21 @@ class ResetForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['email']  
+
+
+class UserUpdateForm(forms.ModelForm):
+
+    first_name = forms.CharField(label='First name', max_length=50)
+    last_name = forms.CharField(label='Last name', max_length=50)
+    email = forms.EmailField(label='Email', max_length=200)
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+
+
+class UpdateProfilePicture(forms.ModelForm):
+    
+    class Meta:
+        model = Profile
+        fields = ['image']

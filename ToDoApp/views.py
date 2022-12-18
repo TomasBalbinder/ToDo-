@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .utility import authentication
 from django.contrib.auth import login, logout, authenticate, get_user_model
-from .forms import TodoForm, CustomRegisterForm
+from .forms import TodoForm, CustomRegisterForm, UserUpdateForm, UpdateProfilePicture
 from .models import TodoModel
 from django.contrib.auth.models import User
 from django.core.mail import send_mail, BadHeaderError
@@ -193,6 +193,33 @@ def password_reset_request(request):
 	password_reset_form = PasswordResetForm()
 	return render(request=request, template_name="ToDoApp/password/password_reset.html", context={"password_reset_form":password_reset_form})
 
+
+
+
 @login_required
 def profile(request):
-    return render(request, 'ToDoApp/profile.html')
+
+    if request.method == "POST":
+        user_update = UserUpdateForm(request.POST, instance=request.user)
+        image_update = UpdateProfilePicture(request.POST, request.FILES, instance=request.user.profile)
+
+        if user_update.is_valid() and image_update.is_valid():
+
+            user_update.save()
+            image_update.save()
+
+            messages.success(request, f'Update byl proveden!')
+            return redirect('profile')
+    else:
+        user_update = UserUpdateForm(instance=request.user)
+        image_update = UpdateProfilePicture(instance=request.user.profile)
+
+    
+    context = {'user_update' : user_update, 
+                'image_update' : image_update}
+    return render(request, 'ToDoApp/profile.html', context)
+
+
+
+def delete_account():
+    pass

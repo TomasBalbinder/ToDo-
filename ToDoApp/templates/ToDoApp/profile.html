@@ -4,8 +4,40 @@
 
 
 {% block content %}
+
+
+    {% for message in messages %}
+    
+        <p> {{message}} </p> 
+
+    {% endfor %}
+
     <h1>{{ user.username }}</h1>
     <img src="{{ user.profile.image.url }}" alt="">
     <h3>{{ user.email }}</h3>
+
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <br>
+        {{ user_update.first_name.label_tag }}
+        {{ user_update.first_name }}
+        <br>
+        {{ user_update.last_name.label_tag }}
+        {{ user_update.last_name }}
+        <br>
+        {{ user_update.email.label_tag }}
+        {{ user_update.email }}
+        <br>
+        {{ image_update }}
+        
+        
+          
+       <button type="submit" >Update</button>   
+    </form>
+
+        <button type="submit" >Delete Account</button>
+
+
+
 {% endblock content %}
     
