@@ -1,5 +1,3 @@
-
-
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
@@ -19,7 +17,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.contrib.sites.shortcuts import get_current_site  
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
-  
+from django.contrib.auth.decorators import login_required 
 
 # Create your views here
 
@@ -74,7 +72,7 @@ def sign_up_user(request):
     return render(request, 'ToDoApp/signup_user.html', {'form' : CustomRegisterForm()})
 
 
-    
+
 
 def activate_account(request, uidb64, token):
     User = get_user_model()
@@ -194,3 +192,7 @@ def password_reset_request(request):
 					return redirect ("/password_reset/done/")
 	password_reset_form = PasswordResetForm()
 	return render(request=request, template_name="ToDoApp/password/password_reset.html", context={"password_reset_form":password_reset_form})
+
+@login_required
+def profile(request):
+    return render(request, 'ToDoApp/profile.html')

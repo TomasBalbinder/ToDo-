@@ -18,7 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from ToDoApp import views
 from django.contrib.auth import views as auth_views
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     
@@ -42,8 +43,14 @@ urlpatterns = [
     # work with todo list
     path('create/', views.create_article, name='createtodo'),
     path('posts/', views.show_posts, name='showposts'),
-   
+
+    # profile
+    path('profile/', views.profile, name='profile'),
 
     # verification from email registration
     path('activate/<uidb64>/<token>/',views.activate_account , name='activate'),
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

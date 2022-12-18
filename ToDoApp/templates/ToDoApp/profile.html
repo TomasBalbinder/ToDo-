@@ -1,0 +1,11 @@
+{% extends 'ToDoApp/base.html' %}
+
+
+
+
+{% block content %}
+    <h1>{{ user.username }}</h1>
+    <img src="{{ user.profile.image.url }}" alt="">
+    <h3>{{ user.email }}</h3>
+{% endblock content %}
+    
