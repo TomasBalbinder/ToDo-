@@ -35,8 +35,9 @@
        <button type="submit" >Update</button>   
     </form>
 
-        <button type="submit" >Delete Account</button>
-
+    <form action="{% url 'delete_account' user.id %}">
+        <input type="submit" value="Delete" />
+    </form>
 
 
 {% endblock content %}

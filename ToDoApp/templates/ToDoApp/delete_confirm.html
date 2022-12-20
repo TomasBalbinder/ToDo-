@@ -1,0 +1,23 @@
+{% extends 'ToDoApp/base.html' %}
+
+
+
+{% block content %}
+
+<h1>delete account</h1>
+
+<p>Are you sure delete your Account?</p>
+
+    <form action="" method="POST" >
+        {% csrf_token %}    
+
+        
+          
+       <button type="submit" >Delete Account</button>   
+    </form>
+
+
+
+
+
+{% endblock content %}

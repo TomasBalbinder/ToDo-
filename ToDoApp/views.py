@@ -4,7 +4,7 @@ from django.contrib import messages
 from .utility import authentication
 from django.contrib.auth import login, logout, authenticate, get_user_model
 from .forms import TodoForm, CustomRegisterForm, UserUpdateForm, UpdateProfilePicture
-from .models import TodoModel
+from .models import TodoModel, Profile
 from django.contrib.auth.models import User
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
@@ -221,5 +221,13 @@ def profile(request):
 
 
 
-def delete_account():
-    pass
+def delete_account(request, pk):
+
+    model = User.objects.get(pk=pk)
+   
+    
+    if request.method == "POST":
+        model.delete()
+        return render(request, 'ToDoApp/home_page.html')
+
+    return render(request, 'ToDoApp/delete_confirm.html')

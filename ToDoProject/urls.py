@@ -47,6 +47,9 @@ urlpatterns = [
     # profile
     path('profile/', views.profile, name='profile'),
 
+
+    path('profile/<int:pk>/', views.delete_account, name='delete_account'),
+
     # verification from email registration
     path('activate/<uidb64>/<token>/',views.activate_account , name='activate'),
 ]
