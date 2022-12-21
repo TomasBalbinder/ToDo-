@@ -9,13 +9,11 @@
 <p>Are you sure delete your Account?</p>
 
     <form action="" method="POST" >
-        {% csrf_token %}    
-
-        
-          
+        {% csrf_token %}          
        <button type="submit" >Delete Account</button>   
     </form>
 
+    <a href="{% url 'profile' %}">Back</a>
 
 
 

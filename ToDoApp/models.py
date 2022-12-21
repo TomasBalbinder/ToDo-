@@ -35,3 +35,5 @@ class Profile(models.Model):
             output_size = (200,200)
             img.thumbnail(output_size)
             img.save(self.image.path)
+
+

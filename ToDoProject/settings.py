@@ -54,7 +54,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ToDoApp.apps.TodoappConfig',
-    'verify_email.apps.VerifyEmailConfig',
 ]
 
 MIDDLEWARE = [
@@ -150,3 +149,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 #EMAIL_BACKEND  =  "django.core.mail.backends.filebased.EmailBackend" 
 #EMAIL_FILE_PATH  =  BASE_DIR  /  "odeslané_e-maily"
+
+

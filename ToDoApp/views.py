@@ -223,11 +223,9 @@ def profile(request):
 
 def delete_account(request, pk):
 
-    model = User.objects.get(pk=pk)
-   
-    
+    delete_user = User.objects.get(pk=pk) 
     if request.method == "POST":
-        model.delete()
+        delete_user.delete()
         return render(request, 'ToDoApp/home_page.html')
 
     return render(request, 'ToDoApp/delete_confirm.html')
