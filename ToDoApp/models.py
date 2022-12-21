@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from random import choice
 from PIL import Image
 
+
 # Create your models here.
 
 class TodoModel(models.Model):

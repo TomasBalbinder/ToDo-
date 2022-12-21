@@ -202,6 +202,7 @@ def profile(request):
     if request.method == "POST":
         user_update = UserUpdateForm(request.POST, instance=request.user)
         image_update = UpdateProfilePicture(request.POST, request.FILES, instance=request.user.profile)
+        print(user_update)
 
         if user_update.is_valid() and image_update.is_valid():
 
